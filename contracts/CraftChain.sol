@@ -5,13 +5,20 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract CraftChain is ERC721, AccessControl {
-
     bytes32 public constant MINTER_ROLE =
         keccak256("MINTER_ROLE");
 
     uint256 private _nextTokenId = 1;
 
     mapping(uint256 => string) private _tokenMetadataURI;
+
+    event StepRecorded(
+        uint256 indexed tokenId,
+        address indexed actor,
+        string metadataURI,
+        bytes32 dataHash,
+        uint256 timestamp
+    );
 
     constructor(address admin)
         ERC721("Craft Chain", "CRAFT")
@@ -37,6 +44,27 @@ contract CraftChain is ERC721, AccessControl {
         _tokenMetadataURI[tokenId] = metadataURI;
 
         return tokenId;
+    }
+
+    function recordStep(
+        uint256 tokenId,
+        string calldata metadataURI,
+        bytes32 dataHash
+    )
+        external
+    {
+        require(
+            ownerOf(tokenId) == msg.sender,
+            "Not token owner"
+        );
+
+        emit StepRecorded(
+            tokenId,
+            msg.sender,
+            metadataURI,
+            dataHash,
+            block.timestamp
+        );
     }
 
     function tokenURI(uint256 tokenId)
