@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function TransferBatch() {
   const [tokenId, setTokenId] = useState("");
@@ -28,9 +29,12 @@ export default function TransferBatch() {
   return (
     <main className="min-h-screen bg-slate-950 px-5 py-12 text-white sm:px-8">
       <div className="mx-auto max-w-3xl">
-        <a href="/" className="text-sm font-medium text-emerald-400 hover:text-emerald-300">
+        <Link
+          href="/"
+          className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
+        >
           ← Back to Home
-        </a>
+        </Link>
 
         <div className="mt-8">
           <p className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
@@ -81,7 +85,7 @@ export default function TransferBatch() {
               className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 font-mono text-sm outline-none focus:border-emerald-400"
             />
             <p className="mt-2 text-xs text-slate-500">
-              Enter the recipient's public Ethereum wallet address. Never enter a seed phrase or private key.
+              Enter the recipient&apos;s public Ethereum wallet address. Never enter a seed phrase or private key.
             </p>
           </div>
 

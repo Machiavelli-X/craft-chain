@@ -1,6 +1,8 @@
+
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function VerifyBatch() {
   const [tokenId, setTokenId] = useState("");
@@ -22,12 +24,12 @@ export default function VerifyBatch() {
   return (
     <main className="min-h-screen bg-slate-950 px-5 py-12 text-white sm:px-8">
       <div className="mx-auto max-w-3xl">
-        <a
+        <Link
           href="/"
           className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
         >
           ← Back to Home
-        </a>
+        </Link>
 
         <div className="mt-8">
           <p className="text-sm font-semibold uppercase tracking-widest text-emerald-400">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 declare global {
   interface Window {
@@ -114,41 +115,41 @@ export default function Home() {
     <main className="min-h-screen bg-slate-950 text-white">
       <nav className="border-b border-slate-800 bg-slate-950">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-5 px-6 py-5">
-          <a href="/" className="shrink-0">
+          <Link href="/" className="shrink-0">
             <h1 className="text-2xl font-bold text-emerald-400">
               Craft-Chain
             </h1>
             <p className="text-xs text-slate-400">Product Traceability</p>
-          </a>
+          </Link>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
-            <a href="/" className="font-medium text-emerald-400">
+            <Link href="/" className="font-medium text-emerald-400">
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="/mint"
               className="text-slate-300 transition hover:text-emerald-400"
             >
               Mint Batch
-            </a>
-            <a
+            </Link>
+            <Link
               href="/record-step"
               className="text-slate-300 transition hover:text-emerald-400"
             >
               Record Step
-            </a>
-            <a
+            </Link>
+            <Link
               href="/transfer"
               className="text-slate-300 transition hover:text-emerald-400"
             >
               Transfer
-            </a>
-            <a
+            </Link>
+            <Link
               href="/verify"
               className="text-slate-300 transition hover:text-emerald-400"
             >
               Verify Batch
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -226,19 +227,19 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <a
+            <Link
               href="/verify"
               className="rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400"
             >
               Start Tracking
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/mint"
               className="rounded-lg border border-slate-700 px-6 py-3 font-semibold text-white transition hover:border-emerald-500 hover:bg-slate-900"
             >
               Mint New Batch
-            </a>
+            </Link>
           </div>
 
           <p className="mt-5 text-xs text-slate-500">
@@ -261,12 +262,12 @@ export default function Home() {
           </p>
 
           <div className="mt-6">
-            <a
+            <Link
               href="/verify"
               className="inline-flex rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400"
             >
               View Batch
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -286,7 +287,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <a
+          <Link
             href="/mint"
             className="group rounded-2xl border border-slate-800 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-emerald-500"
           >
@@ -301,9 +302,9 @@ export default function Home() {
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Open Mint Page →
             </p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/record-step"
             className="group rounded-2xl border border-slate-800 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-emerald-500"
           >
@@ -318,9 +319,9 @@ export default function Home() {
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Record a Step →
             </p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/transfer"
             className="group rounded-2xl border border-slate-800 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-emerald-500"
           >
@@ -330,14 +331,14 @@ export default function Home() {
             <h4 className="text-xl font-bold text-emerald-400">Transfer Batch</h4>
             <p className="mt-3 text-sm leading-6 text-slate-400">
               Prepare a custody transfer by entering a batch Token ID and
-              the recipient's public wallet address.
+              the recipient&apos;s public wallet address.
             </p>
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Transfer Ownership →
             </p>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/verify"
             className="group rounded-2xl border border-slate-800 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-emerald-500"
           >
@@ -352,7 +353,7 @@ export default function Home() {
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Verify Batch →
             </p>
-          </a>
+          </Link>
         </div>
       </section>
 

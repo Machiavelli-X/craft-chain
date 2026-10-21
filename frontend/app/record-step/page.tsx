@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function RecordStep() {
   const [tokenId, setTokenId] = useState("");
@@ -13,7 +14,12 @@ export default function RecordStep() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!tokenId.trim() || !description.trim() || !location.trim() || !stepDate) {
+    if (
+      !tokenId.trim() ||
+      !description.trim() ||
+      !location.trim() ||
+      !stepDate
+    ) {
       setMessage("Please complete all fields before continuing.");
       return;
     }
@@ -26,18 +32,20 @@ export default function RecordStep() {
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-12 text-white">
       <div className="mx-auto max-w-3xl">
-        <a
+        <Link
           href="/"
           className="text-sm text-emerald-400 hover:text-emerald-300"
         >
           ← Back to Home
-        </a>
+        </Link>
 
         <p className="mt-8 text-sm font-semibold uppercase tracking-wider text-emerald-400">
           Craft-Chain Traceability
         </p>
 
-        <h1 className="mt-3 text-4xl font-bold">Record a Supply Chain Step</h1>
+        <h1 className="mt-3 text-4xl font-bold">
+          Record a Supply Chain Step
+        </h1>
 
         <p className="mt-3 leading-7 text-slate-400">
           Add a processing, transportation, or custody update to a craft batch.
