@@ -7,20 +7,26 @@ export default function TransferBatch() {
   const [tokenId, setTokenId] = useState("");
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!tokenId.trim() || !recipient.trim()) {
-      setMessage("Please enter both the Batch Token ID and recipient address.");
+      setIsError(true);
+      setMessage(
+        "Please enter both the Batch Token ID and recipient address."
+      );
       return;
     }
 
     if (!/^(0x)?[0-9a-fA-F]{40}$/.test(recipient.trim())) {
+      setIsError(true);
       setMessage("Please enter a valid Ethereum wallet address.");
       return;
     }
 
+    setIsError(false);
     setMessage(
       "Details validated successfully. Blockchain transfer will be connected during integration."
     );
@@ -40,11 +46,14 @@ export default function TransferBatch() {
           <p className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
             Craft-Chain Traceability
           </p>
+
           <h1 className="mt-3 text-3xl font-bold sm:text-4xl">
             Transfer Batch Ownership
           </h1>
+
           <p className="mt-3 text-slate-400">
-            Transfer custody of a craft product batch to its next supply-chain participant.
+            Transfer custody of a craft product batch to its next supply-chain
+            participant.
           </p>
         </div>
 
@@ -53,9 +62,14 @@ export default function TransferBatch() {
           className="mt-8 space-y-6 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl sm:p-8"
         >
           <div>
-            <label htmlFor="tokenId" className="mb-2 block text-sm font-medium">
-              Batch Token ID <span className="text-emerald-400">*</span>
+            <label
+              htmlFor="tokenId"
+              className="mb-2 block text-sm font-medium"
+            >
+              Batch Token ID{" "}
+              <span className="text-emerald-400">*</span>
             </label>
+
             <input
               id="tokenId"
               type="number"
@@ -63,36 +77,55 @@ export default function TransferBatch() {
               step="1"
               required
               value={tokenId}
-              onChange={(event) => setTokenId(event.target.value)}
+              onChange={(event) => {
+                setTokenId(event.target.value);
+                setMessage("");
+                setIsError(false);
+              }}
               placeholder="e.g. 1"
               className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-emerald-400"
             />
           </div>
 
           <div>
-            <label htmlFor="recipient" className="mb-2 block text-sm font-medium">
-              Recipient Wallet Address <span className="text-emerald-400">*</span>
+            <label
+              htmlFor="recipient"
+              className="mb-2 block text-sm font-medium"
+            >
+              Recipient Wallet Address{" "}
+              <span className="text-emerald-400">*</span>
             </label>
+
             <input
               id="recipient"
               type="text"
               required
               value={recipient}
-              onChange={(event) => setRecipient(event.target.value)}
+              onChange={(event) => {
+                setRecipient(event.target.value);
+                setMessage("");
+                setIsError(false);
+              }}
               placeholder="0x..."
               autoComplete="off"
               spellCheck={false}
               className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 font-mono text-sm outline-none focus:border-emerald-400"
             />
+
             <p className="mt-2 text-xs text-slate-500">
-              Enter the recipient&apos;s public Ethereum wallet address. Never enter a seed phrase or private key.
+              Enter the recipient&apos;s public Ethereum wallet address. Never
+              enter a seed phrase or private key.
             </p>
           </div>
 
           {message && (
             <div
-              role="status"
-              className="rounded-lg border border-emerald-800 bg-emerald-950/50 p-4 text-sm text-emerald-300"
+              role={isError ? "alert" : "status"}
+              className={`rounded-lg border p-4 text-sm ${
+                isError
+                  ? "border-red-800 bg-red-950/50 text-red-300"
+                  : "border-emerald-800 bg-emerald-950/50 text-emerald-300"
+              }`}
             >
               {message}
             </div>
@@ -106,7 +139,9 @@ export default function TransferBatch() {
           </button>
 
           <p className="border-t border-slate-800 pt-4 text-xs leading-5 text-slate-500">
-            Frontend demonstration only. This form validates the details but does not transfer NFT ownership until connected to the smart contract.
+            Frontend demonstration only. This form validates the details but
+            does not transfer NFT ownership until connected to the smart
+            contract.
           </p>
         </form>
       </div>
