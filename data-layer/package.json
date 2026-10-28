@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test-hashing.mjs && node test-validation.mjs && node test-step-processor.mjs && node test-batch-processor.mjs && node test-ipfs-retrieval.mjs && node test-verification.mjs && node test-tampering.mjs && node test-public-api.mjs"
   },
   "keywords": [],
   "author": "",
