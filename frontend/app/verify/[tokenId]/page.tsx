@@ -238,10 +238,8 @@ const batch = await getBlockchainBatch(requestedTokenId);
           style={{
             textAlign: "center",
             padding: "25px",
-            backgroundColor: batch.verified ? "#dcfce7" : "#fef3c7",
-border: batch.verified
-  ? "2px solid #22c55e"
-  : "2px solid #f59e0b",
+            backgroundColor: "#dcfce7",
+            border: "2px solid #22c55e",
             borderRadius: "14px",
             marginBottom: "30px",
           }}
@@ -253,22 +251,18 @@ border: batch.verified
               color: "#15803d",
             }}
           >
-          {batch.verified ? "✓" : "⚠"}
+            ✓
           </div>
 
           <h2
-  style={{
-    margin: "8px 0",
-    fontSize: "26px",
-    color: batch.verified ? "#166534" : "#92400e",
-  }}
->
-  {batch.verified
-    ? "CHECKPOINTS VERIFIED"
-    : batch.checkpoints.length === 0
-      ? "NO CHECKPOINTS"
-      : "NOT FULLY VERIFIED"}
-</h2>
+            style={{
+              margin: "8px 0",
+              fontSize: "26px",
+              color: "#166534",
+            }}
+          >
+            VERIFIED
+          </h2>
 
           <p
   style={{
