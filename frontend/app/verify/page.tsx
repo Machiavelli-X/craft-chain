@@ -1,25 +1,35 @@
-
+﻿
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function VerifyBatch() {
+  const router = useRouter();
   const [tokenId, setTokenId] = useState("");
   const [message, setMessage] = useState("");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!tokenId.trim() || !/^\d+$/.test(tokenId.trim())) {
-      setMessage("Please enter a valid non-negative integer Token ID.");
+    const idText = tokenId.trim();
+
+    if (!idText || !/^\d+$/.test(idText)) {
+      setMessage("Please enter a valid positive Token ID.");
       return;
     }
 
-    setMessage(
-      `Token ID ${tokenId.trim()} has been entered successfully. Blockchain verification will be available after smart contract integration.`
-    );
+    const id = Number(idText);
+
+    if (!Number.isSafeInteger(id) || id <= 0) {
+      setMessage("Please enter a valid positive Token ID.");
+      return;
+    }
+
+    router.push(`/verify/${id}`);
   }
+
 
   return (
     <main className="min-h-screen bg-slate-950 px-5 py-12 text-white sm:px-8">
@@ -28,7 +38,7 @@ export default function VerifyBatch() {
           href="/"
           className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
         >
-          ← Back to Home
+          â† Back to Home
         </Link>
 
         <div className="mt-8">
@@ -93,3 +103,5 @@ export default function VerifyBatch() {
     </main>
   );
 }
+
+
