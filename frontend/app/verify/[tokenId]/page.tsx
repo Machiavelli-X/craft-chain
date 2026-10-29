@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getBlockchainBatch } from "../../lib/getBlockchainBatch";
 import QRCode from "../../components/QRCode";
 
@@ -71,8 +72,8 @@ if (!Number.isInteger(requestedTokenId) || requestedTokenId <= 0) {
           Please enter a valid batch number.
         </p>
 
-        <a
-          href="/verify/1"
+        <Link
+          href="/verify"
           style={{
             display: "inline-block",
             marginTop: "20px",
@@ -85,7 +86,7 @@ if (!Number.isInteger(requestedTokenId) || requestedTokenId <= 0) {
           }}
         >
           Back to Verification
-        </a>
+        </Link>
       </div>
     </main>
   );
@@ -159,8 +160,8 @@ const batch = await getBlockchainBatch(requestedTokenId);
             Please check the QR code or batch number and try again.
           </p>
 
-          <a
-            href="/verify/1"
+          <Link
+            href="/verify"
             style={{
               display: "inline-block",
               marginTop: "20px",
@@ -173,7 +174,7 @@ const batch = await getBlockchainBatch(requestedTokenId);
             }}
           >
             Back to Verification
-          </a>
+          </Link>
         </div>
       </main>
     );
@@ -201,7 +202,7 @@ const batch = await getBlockchainBatch(requestedTokenId);
     boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
   }}
 ><div style={{ marginBottom: "20px" }}>
-  <a
+  <Link
     href="/"
     style={{
       color: "#374151",
@@ -210,7 +211,7 @@ const batch = await getBlockchainBatch(requestedTokenId);
     }}
   >
     ← Back to Craft Chain
-  </a>
+  </Link>
 </div>
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <h1
@@ -394,38 +395,33 @@ border: batch.verified
                   {event.timestamp}
                 </small>
 
-                <small
-  style={{
-    display: "block",
-    color: "#374151",
-    wordBreak: "break-all",
-    backgroundColor: "#f3f4f6",
-    padding: "8px",
-    borderRadius: "6px",
-    marginTop: "6px",
-  }}
->
-  <div
-  style={{
-    marginTop: "10px",
-    padding: "10px 12px",
-    backgroundColor: "#f3f4f6",
-    borderRadius: "8px",
-    fontSize: "13px",
-    wordBreak: "break-all",
-  }}
->
-  <div>
-    <strong>Transaction:</strong> {event.transactionHash}
-  </div>
-
-  {event.blockNumber !== undefined && (
-    <div style={{ marginTop: "4px" }}>
-      <strong>Block:</strong> {event.blockNumber}
-    </div>
-  )}
-</div>
-</small>
+                <div
+                  style={{
+                    marginTop: "10px",
+                    padding: "10px 12px",
+                    backgroundColor: "#f3f4f6",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  <div>
+                    <strong>Transaction: </strong>
+                    <a
+                      href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#059669", textDecoration: "underline" }}
+                    >
+                      {event.transactionHash.slice(0, 18)}...{event.transactionHash.slice(-8)} ↗
+                    </a>
+                  </div>
+                  {event.blockNumber !== undefined && (
+                    <div style={{ marginTop: "4px" }}>
+                      <strong>Block:</strong> #{event.blockNumber}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))}

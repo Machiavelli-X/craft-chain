@@ -6,6 +6,7 @@ import {
   keccak256,
   toUtf8Bytes,
 } from "ethers";
+import { getMetadata } from "../../lib/ipfsStorage";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,8 +18,8 @@ const ABI = [
 ];
 
 const SEPOLIA_CHAIN_ID = BigInt(11155111);
-const CHUNK_SIZE = 10;
-const MAX_RANGE = 1000;
+const CHUNK_SIZE = 1000;
+const MAX_RANGE = 50000;
 
 type CheckpointStatus =
   | "MATCH"
@@ -48,6 +49,7 @@ function extractCid(uri: string): string | null {
   return cid;
 }
 
+
 async function verifyMetadata(
   metadataUri: string,
   expectedHash: string
@@ -63,35 +65,36 @@ async function verifyMetadata(
 
   const gateway = process.env.PINATA_GATEWAY;
 
-  if (
-    !gateway ||
-    !/^[a-zA-Z0-9.-]+$/.test(gateway)
-  ) {
-    return {
-      status: "UNVERIFIABLE" as CheckpointStatus,
-      reason: "Trusted metadata gateway is not configured",
-    };
-  }
-
   try {
-    const url = `https://${gateway}/ipfs/${cid}`;
+    let metadata: unknown = null;
 
-    const response = await fetch(url, {
-      signal: AbortSignal.timeout(10000),
-      cache: "no-store",
-    });
+    if (gateway && /^[a-zA-Z0-9.-]+$/.test(gateway)) {
+      try {
+        const url = `https://${gateway}/ipfs/${cid}`;
+        const response = await fetch(url, {
+          signal: AbortSignal.timeout(5000),
+          cache: "no-store",
+        });
+        if (response.ok) {
+          metadata = await response.json();
+        }
+      } catch {
+        // Gateway failed or timed out, fall back below
+      }
+    }
 
-    if (!response.ok) {
+    if (!metadata) {
+      metadata = await getMetadata(cid);
+    }
+
+    if (!metadata) {
       return {
         status: "UNVERIFIABLE" as CheckpointStatus,
-        reason: `Metadata gateway returned ${response.status}`,
+        reason: "Metadata could not be retrieved from gateway or storage",
       };
     }
 
-    const metadata: unknown = await response.json();
-
     if (
-      metadata === null ||
       typeof metadata !== "object" ||
       Array.isArray(metadata)
     ) {
@@ -101,7 +104,7 @@ async function verifyMetadata(
       };
     }
 
-    // Must match Person 2's hashing method:
+    // Must match hashing method:
     // JSON.stringify(metadata) -> UTF-8 -> Keccak-256
     const canonicalJSON = JSON.stringify(metadata);
 
@@ -122,8 +125,8 @@ async function verifyMetadata(
 
     return {
       status: verified
-        ? "MATCH" as const
-        : "MISMATCH" as const,
+        ? ("MATCH" as const)
+        : ("MISMATCH" as const),
       calculatedHash,
     };
   } catch {
@@ -173,10 +176,37 @@ export async function GET(request: Request) {
       provider
     );
 
-    const [metadataUri, owner] = await Promise.all([
-      contract.tokenURI(BigInt(tokenId)),
-      contract.ownerOf(BigInt(tokenId)),
-    ]);
+    let metadataUri = "";
+    let owner = "";
+
+    try {
+      [metadataUri, owner] = await Promise.all([
+        contract.tokenURI(BigInt(tokenId)),
+        contract.ownerOf(BigInt(tokenId)),
+      ]);
+    } catch (contractErr: unknown) {
+      const err = contractErr as {
+        code?: string;
+        data?: string;
+        message?: string;
+      };
+
+      if (
+        err.code === "CALL_EXCEPTION" ||
+        err.data?.startsWith("0x7e273289") ||
+        err.message?.includes("nonexistent")
+      ) {
+        return NextResponse.json({
+          tokenId,
+          exists: false,
+          verified: false,
+          verificationStatus: "NOT_FOUND",
+          message: "Token does not exist on-chain.",
+        });
+      }
+
+      throw contractErr;
+    }
 
     const mode = searchParams.get("mode");
 

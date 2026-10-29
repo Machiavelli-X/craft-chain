@@ -1,4 +1,4 @@
-﻿
+
 "use client";
 
 import { useState } from "react";
@@ -91,12 +91,11 @@ export default function VerifyBatch() {
             type="submit"
             className="w-full rounded-lg bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-slate-900"
           >
-            Validate Token ID
+            Verify Batch on Sepolia
           </button>
 
           <p className="border-t border-slate-800 pt-4 text-xs leading-5 text-slate-500">
-            Frontend demonstration only. Actual NFT ownership, metadata, and
-            transaction history require smart contract and data integration.
+            Queries live smart contract state on Ethereum Sepolia and verifies IPFS cryptographic checkpoint hashes.
           </p>
         </form>
       </div>

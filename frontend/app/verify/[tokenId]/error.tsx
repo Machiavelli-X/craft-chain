@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Error({
   reset,
 }: {
@@ -65,7 +67,7 @@ export default function Error({
             lineHeight: "1.6",
           }}
         >
-          We couldn't verify this craft product right now.
+          We couldn&apos;t verify this craft product right now.
           Please try again in a moment.
         </p>
 
@@ -86,8 +88,8 @@ export default function Error({
           Try Again
         </button>
 
-        <a
-          href="/verify/1"
+        <Link
+          href="/verify"
           style={{
             display: "block",
             marginTop: "15px",
@@ -96,7 +98,7 @@ export default function Error({
           }}
         >
           Back to Verification
-        </a>
+        </Link>
       </div>
     </main>
   );

@@ -220,10 +220,9 @@ export default function Home() {
           </h2>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400">
-            Craft-Chain helps track the journey of craft products through
-            the supply chain. Each batch can have a unique blockchain
-            identity, with product details and custody history available
-            for verification after integration.
+            Craft-Chain provides end-to-end traceability for handcrafted products on Ethereum Sepolia.
+            Each batch gets a unique NFT identity. Custodianship hand-offs and production steps
+            are cryptographically anchored to the blockchain and verifiable by anyone.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
@@ -313,8 +312,8 @@ export default function Home() {
             </div>
             <h4 className="text-xl font-bold text-emerald-400">Record Steps</h4>
             <p className="mt-3 text-sm leading-6 text-slate-400">
-              Prepare processing, transportation, and other supply-chain
-              event details for a batch.
+              Write processing, transportation, and custody events permanently
+              on-chain with IPFS metadata and Keccak-256 hash verification.
             </p>
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Record a Step →
@@ -330,8 +329,8 @@ export default function Home() {
             </div>
             <h4 className="text-xl font-bold text-emerald-400">Transfer Batch</h4>
             <p className="mt-3 text-sm leading-6 text-slate-400">
-              Prepare a custody transfer by entering a batch Token ID and
-              the recipient&apos;s public wallet address.
+              Transfer ERC721 token ownership to the co-op, retailer, or buyer
+              with on-chain safeTransferFrom confirmation.
             </p>
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Transfer Ownership →
@@ -347,8 +346,8 @@ export default function Home() {
             </div>
             <h4 className="text-xl font-bold text-emerald-400">Verify History</h4>
             <p className="mt-3 text-sm leading-6 text-slate-400">
-              Enter a batch Token ID to prepare for checking product
-              information and custody history.
+              Enter any batch Token ID to view its live ownership, full checkpoint
+              journey, and IPFS cryptographic verification status.
             </p>
             <p className="mt-5 text-sm font-semibold text-white group-hover:text-emerald-400">
               Verify Batch →
@@ -369,22 +368,22 @@ export default function Home() {
               {
                 number: "01",
                 title: "Create",
-                description: "Prepare the craft batch details.",
+                description: "Mint a new NFT for your craft batch. Metadata is stored on IPFS and anchored on Sepolia.",
               },
               {
                 number: "02",
                 title: "Record",
-                description: "Prepare supply-chain event details.",
+                description: "Write supply-chain events on-chain. Each step is cryptographically hashed for tamper-proof integrity.",
               },
               {
                 number: "03",
                 title: "Transfer",
-                description: "Prepare custody handover details.",
+                description: "Transfer ERC721 token custody on-chain as the batch moves between artisan, co-op, and retailer.",
               },
               {
                 number: "04",
                 title: "Verify",
-                description: "Look up a batch by its Token ID.",
+                description: "Lookup any Batch Token ID to view its full supply-chain journey and cryptographic checkpoint status.",
               },
             ].map((step) => (
               <div
@@ -410,8 +409,7 @@ export default function Home() {
           Blockchain-Based Craft Product Traceability
         </p>
         <p className="mt-2 text-xs text-slate-600">
-          Frontend demonstration. Blockchain and IPFS functionality requires
-          integration with the project services.
+          Powered by Ethereum Sepolia Testnet &amp; IPFS cryptographic checkpoints.
         </p>
       </footer>
     </main>
